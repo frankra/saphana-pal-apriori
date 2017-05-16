@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta http-equiv='Content-Type' content='text/html;charset=UTF-8'/>
+		
+		<link href="/src/assets/css/styles.css" rel="stylesheet"/>
+		
+		<script src="resources/sap-ui-core.js"
+				id="sap-ui-bootstrap"
+				data-sap-ui-libs="sap.m"
+				data-sap-ui-xx-bindingSyntax='complex'
+				data-sap-ui-theme="sap_bluecrystal">
+		</script>
+		<!-- only load the mobile lib "sap.m" and the "sap_bluecrystal" theme -->
+
+		<script>
+			jQuery.sap.registerModulePath("sap.ui.scpdemoday", "/src");
+			sap.ui.getCore().attachInit(function() {
+				new sap.ui.core.ComponentContainer({
+					height : "100%",
+					name : "sap.ui.scpdemoday"
+				}).placeAt("content");
+			});
+		</script>
+
+	</head>
+	<body class="sapUiBody" role="application" style="overflow:hidden;">
+		<div id="content"></div>
+	</body>
+</html>
