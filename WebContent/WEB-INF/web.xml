@@ -13,7 +13,7 @@
 	</session-config>
 	
 	<resource-ref>
-		<res-ref-name>SCPDemoDayDB</res-ref-name>
+		<res-ref-name>SCPDemoDay</res-ref-name>
 		<res-type>javax.sql.DataSource</res-type>
 	</resource-ref>
 
@@ -30,7 +30,7 @@
 		<role-name>admin</role-name>
 	</security-role>
 
-	<security-constraint>
+	<!-- <security-constraint>
 		<web-resource-collection>
 			<web-resource-name>Protected Area</web-resource-name>
 			<url-pattern>/*</url-pattern>
@@ -38,7 +38,7 @@
 		<auth-constraint>
 			<role-name>Everyone</role-name>
 		</auth-constraint>
-	</security-constraint>
+	</security-constraint> -->
 
 
 	

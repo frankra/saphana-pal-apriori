@@ -34,6 +34,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 	"com.sap.csc.scpdemoday.rest",//
 	"com.sap.csc.scpdemoday.controller",//
 	"com.sap.csc.scpdemoday.model",//
+	"com.sap.csc.scpdemoday.dao",//
 	"com.sap.csc.scpdemoday.service" 
 })
 /**
@@ -49,17 +50,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @EnableAspectJAutoProxy
 public class AppConfig extends WebMvcConfigurerAdapter {
 
-	/**
-	 * Register HCP User Provider as a Spring Bean.
-	 * 
-	 * @return UserProvider
-	 */
-	@Bean
-	public CommonsMultipartResolver multipartResolver() {
-		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
-		resolver.setDefaultEncoding("utf-8");
-		return resolver;
-	}
+	
 
 	/**
 	 * Validator Bean for the Hibernate Validator
