@@ -6,9 +6,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sap.csc.scpdemoday.dao.TweetDAO;
 import com.sap.csc.scpdemoday.dto.AprioriProcessingResponseDTO;
+import com.sap.csc.scpdemoday.model.AprioriResult;
 import com.sap.csc.scpdemoday.model.Tweet;
 
 import twitter4j.Query;
@@ -25,6 +29,7 @@ public class TwitterController {
 	TweetDAO tweetDAO;
 	
 	public AprioriProcessingResponseDTO processTwitterSearch(String searchText) throws TwitterException {
+		AprioriProcessingResponseDTO response = new AprioriProcessingResponseDTO();
 		
 		tweetDAO.removeAllTweets();
 		
@@ -33,9 +38,10 @@ public class TwitterController {
 		
 		tweetDAO.persistTweets(tweets);
 		
-		AprioriProcessingResponseDTO response = tweetDAO.executeApriori();
+		tweetDAO.executeApriori();
 		
 		response.setNumberOfTweets(searchResult.getCount());
+		response.setQuery(searchResult.getQuery());
 		
 		return response;
 	}
@@ -49,9 +55,6 @@ public class TwitterController {
 
 		result = twitter.search(query);
 		
-		for (Status status : result.getTweets()) {
-			System.out.println("@" + status.getUser().getScreenName() + ":" + status.getText());
-		}
 		return result;
 	}
 	
@@ -68,6 +71,19 @@ public class TwitterController {
 	}
 	
 	public Collection<Tweet> getAllTweets(){
-		return tweetDAO.getAll();
+		return tweetDAO.getAllTweets();
+	}
+	public Collection<AprioriResult> getAllAprioriResults(){
+		return tweetDAO.getAllAprioriResults();
+	}
+	
+	public Collection<AprioriResult> getRulesBySupport(@RequestParam int count) {
+		return tweetDAO.getRulesBySupport(count);
+	}
+	public Collection<AprioriResult> getRulesByConfidence(@RequestParam int count) {
+		return tweetDAO.getRulesByConfidence(count);
+	}
+	public Collection<AprioriResult> getRulesByLift(@RequestParam int count) {
+		return tweetDAO.getRulesByLift(count);
 	}
 }

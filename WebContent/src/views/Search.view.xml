@@ -10,10 +10,15 @@
 		backgroundDesign="Solid"
 		>
 		<content>
-			
+			<Panel>
+				<headerToolbar>
+					<Toolbar>
+						<SearchField width="90%" class="sapUiSmallMargin" />
+					</Toolbar>
+				</headerToolbar>
+				<content>
+				</content>
+			</Panel>
 		</content>
-		<footer>
-			
-		</footer>
 	</Page>
 </core:View>

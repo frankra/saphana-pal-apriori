@@ -1,3 +1,4 @@
 /target/
 .DS_Store
 /src/twitter4j.properties
+WebContent/src/assets/lib/

@@ -1,0 +1,20 @@
+{
+  "name": "saphana-pal-apriori",
+  "homepage": "https://github.com/frankrafael/saphana-pal-apriori",
+  "authors": [
+    "Rafael Frank <rafael.frank@sap.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "d3": "^4.9.1"
+  }
+}
