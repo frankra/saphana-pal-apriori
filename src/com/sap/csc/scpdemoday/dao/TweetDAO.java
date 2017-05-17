@@ -41,8 +41,12 @@ public class TweetDAO {
 		AprioriProcessingResponseDTO response = new AprioriProcessingResponseDTO();
 		//call procedure
 		
-		/*Query runApriori = em.createNativeQuery("CALL PAL_APRIORI_RULE(PAL_TRANS_TAB, PAL_CONTROL_TAB, PAL_RESULT_TAB, PAL_PMMLMODEL_TAB) WITH overview;");
-		runApriori.executeUpdate();*/
+		Query runApriori = em.createNativeQuery("CALL SYSTEM.PAL_APRIORI_RULE(TRANSACTIONS_VIEW, APRIORI_PROCEDURE_CONFIGURATION, APRIORI_RESULT, APRIORI_PMML_MODEL) WITH OVERVIEW");
+		runApriori.executeUpdate();
+		
+		Query query = em.createQuery("SELECT e FROM AprioriResult e");
+		
+		response.setResults(query.getResultList());
 		
 		return response;
 	}
