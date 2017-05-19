@@ -2,22 +2,22 @@ package com.sap.csc.scpdemoday.dto;
 
 public class AprioriResultDTO {
 	
-	private int rulesCount;
+	private Long rulesCount;
 	
 	public AprioriResultDTO() {
 		super();
 	}
 
-	public AprioriResultDTO(int rulesCount) {
+	public AprioriResultDTO(Long rulesCount) {
 		super();
 		this.rulesCount = rulesCount;
 	}
 
-	public int getRulesCount() {
+	public Long getRulesCount() {
 		return rulesCount;
 	}
 
-	public void setRulesCount(int rulesCount) {
+	public void setRulesCount(Long rulesCount) {
 		this.rulesCount = rulesCount;
 	}
 	

@@ -33,11 +33,11 @@ public class AprioriService {
 			return e;
 		}
 	}
-	
+
 	@RequestMapping(value = "/run", method = RequestMethod.GET)
 	public AprioriResultDTO run() {
 		return twitterController.runApriori();
-		
+
 	}
 
 	@RequestMapping(value = "/getRulesBySupport", method = RequestMethod.GET)

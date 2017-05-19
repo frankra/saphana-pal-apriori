@@ -35,7 +35,7 @@ public class TweetDAO {
 		AprioriResultDTO result = new AprioriResultDTO(); 
 		em.createNativeQuery("CALL SYSTEM.PAL_APRIORI_RULE(TRANSACTIONS_VIEW, APRIORI_PROCEDURE_CONFIGURATION, APRIORI_RESULT, APRIORI_PMML_MODEL) WITH OVERVIEW").executeUpdate();
 		
-		result.setRulesCount((int) em.createQuery("SELECT COUNT(e) FROM AprioriResult e").getSingleResult());
+		result.setRulesCount((Long) em.createQuery("SELECT COUNT(e) FROM AprioriResult e").getSingleResult());
 		
 		return result;
 	}
