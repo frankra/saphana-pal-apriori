@@ -28,22 +28,22 @@ public class TwitterController {
 	@Autowired
 	TweetDAO tweetDAO;
 	
-	public AprioriProcessingResponseDTO processTwitterSearch(String searchText) throws TwitterException {
+	public AprioriProcessingResponseDTO gatherTweets(String searchText) throws TwitterException {
 		AprioriProcessingResponseDTO response = new AprioriProcessingResponseDTO();
-		
-		tweetDAO.removeAllTweets();
 		
 		QueryResult searchResult = this.searchOnTwitter(searchText);
 		List<Tweet> tweets = this.convertTweetsFromStatuses(searchResult.getTweets());
-		
+
 		tweetDAO.persistTweets(tweets);
-		
-		tweetDAO.executeApriori();
 		
 		response.setNumberOfTweets(searchResult.getCount());
 		response.setQuery(searchResult.getQuery());
 		
 		return response;
+	}
+	
+	public void runApriori(){
+		tweetDAO.executeApriori();
 	}
 
 	private QueryResult searchOnTwitter(String searchText) throws TwitterException {

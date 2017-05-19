@@ -22,15 +22,21 @@ public class AprioriService {
 	@Autowired
 	private TwitterController twitterController;
 
-	@RequestMapping(value = "/execute", method = RequestMethod.GET)
+	@RequestMapping(value = "/gatherTweets", method = RequestMethod.GET)
 	public Object search(@RequestParam String q) {
 
 		try {
-			return twitterController.processTwitterSearch(q);
+			return twitterController.gatherTweets(q);
 		} catch (TwitterException e) {
 			e.printStackTrace();
 			return e;
 		}
+	}
+	
+	@RequestMapping(value = "/run", method = RequestMethod.GET)
+	public Object run() {
+		twitterController.runApriori();
+		return null;
 	}
 
 	@RequestMapping(value = "/getRulesBySupport", method = RequestMethod.GET)

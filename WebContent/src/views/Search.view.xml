@@ -1,22 +1,132 @@
-<core:View	xmlns:core="sap.ui.core"
-			xmlns:mvc="sap.ui.core.mvc"
-			xmlns="sap.m" 
-			controllerName="sap.ui.scpdemoday.views.Search"
-			xmlns:html="http://www.w3.org/1999/xhtml">
-	<Page
-		title="SCP Day Demo - HANA PAL APRIORI Rule"
-		class="sapUiContentPadding"
-		showNavButton="false"
-		backgroundDesign="Solid"
-		>
+<core:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m" xmlns:l="sap.ui.layout" controllerName="sap.ui.scpdemoday.views.Search"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page id="page" busyIndicatorDelay="0"
+		title="SCP Day Demo - HANA PAL APRIORI Rule" class="sapUiContentPadding"
+		showNavButton="false" backgroundDesign="Solid">
 		<content>
+			<Image src="/src/assets/img/twitter.jpg" densityAware="false"
+				width="100%">
+				<layoutData>
+					<FlexItemData growFactor="1" />
+				</layoutData>
+			</Image>
 			<Panel>
 				<headerToolbar>
 					<Toolbar>
-						<SearchField width="90%" class="sapUiSmallMargin" />
+						<SearchField search="runDemo" class="sapUiSmallMargin" />
+						<Button press="executeApriori"></Button>
+						<Button press="refreshModels"></Button>
 					</Toolbar>
 				</headerToolbar>
 				<content>
+
+					<Table inset="false" items="{TopRulesBySupport>/}">
+						<headerToolbar>
+							<Toolbar>
+								<Title text="Top 10 Rules by Support" level="H2" />
+							</Toolbar>
+						</headerToolbar>
+						<columns>
+							<Column>
+								<Text text="Prerule" />
+							</Column>
+							<Column>
+								<Text text="Postrule" />
+							</Column>
+							<Column>
+								<Text text="Support" />
+							</Column>
+							<Column>
+								<Text text="Confidence" />
+							</Column>
+							<Column>
+								<Text text="Lift" />
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{TopRulesBySupport>prerule}" />
+									<Text text="{TopRulesBySupport>postrule}" />
+									<Text text="{TopRulesBySupport>support}" />
+									<Text text="{TopRulesBySupport>confidence}" />
+									<Text text="{TopRulesBySupport>lift}" />
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+					<Table inset="false" items="{TopRulesByConfidence>/}">
+						<headerToolbar>
+							<Toolbar>
+								<Title text="Top 10 Rules by Confidence" level="H2" />
+							</Toolbar>
+						</headerToolbar>
+						<columns>
+							<Column>
+								<Text text="Prerule" />
+							</Column>
+							<Column>
+								<Text text="Postrule" />
+							</Column>
+							<Column>
+								<Text text="Support" />
+							</Column>
+							<Column>
+								<Text text="Confidence" />
+							</Column>
+							<Column>
+								<Text text="Lift" />
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{TopRulesByConfidence>prerule}" />
+									<Text text="{TopRulesByConfidence>postrule}" />
+									<Text text="{TopRulesByConfidence>support}" />
+									<Text text="{TopRulesByConfidence>confidence}" />
+									<Text text="{TopRulesByConfidence>lift}" />
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+					<Table inset="false" items="{TopRulesByLift>/}">
+						<headerToolbar>
+							<Toolbar>
+								<Title text="Top 10 Rules by Lift" level="H2" />
+							</Toolbar>
+						</headerToolbar>
+						<columns>
+							<Column>
+								<Text text="Prerule" />
+							</Column>
+							<Column>
+								<Text text="Postrule" />
+							</Column>
+							<Column>
+								<Text text="Support" />
+							</Column>
+							<Column>
+								<Text text="Confidence" />
+							</Column>
+							<Column>
+								<Text text="Lift" />
+							</Column>
+						</columns>
+						<items>
+							<ColumnListItem>
+								<cells>
+									<Text text="{TopRulesByLift>prerule}" />
+									<Text text="{TopRulesByLift>postrule}" />
+									<Text text="{TopRulesByLift>support}" />
+									<Text text="{TopRulesByLift>confidence}" />
+									<Text text="{TopRulesByLift>lift}" />
+								</cells>
+							</ColumnListItem>
+						</items>
+					</Table>
+
 				</content>
 			</Panel>
 		</content>
