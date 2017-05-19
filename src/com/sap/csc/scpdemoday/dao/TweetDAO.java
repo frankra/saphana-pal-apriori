@@ -1,6 +1,5 @@
 package com.sap.csc.scpdemoday.dao;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -8,10 +7,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.sap.csc.scpdemoday.dto.AprioriResultDTO;
 import com.sap.csc.scpdemoday.model.AprioriResult;
 import com.sap.csc.scpdemoday.model.Tweet;
 
@@ -20,11 +19,6 @@ public class TweetDAO {
 	@PersistenceContext
 	private EntityManager em;
 
-	private String SQL_SRC_PATH = "/com/sap/csc/scpdemoday/sql/";
-	
-	public TweetDAO(){
-		//this.bootstrapSQL();
-	}
 	@Transactional
 	public void persistTweets(List<Tweet> tweets) {
 		this.cleanup();
@@ -37,8 +31,13 @@ public class TweetDAO {
 		em.createNativeQuery("CALL SYSTEM.CLEANUP()").executeUpdate();
 	}
 	@Transactional
-	public void executeApriori() {
+	public AprioriResultDTO executeApriori() {
+		AprioriResultDTO result = new AprioriResultDTO(); 
 		em.createNativeQuery("CALL SYSTEM.PAL_APRIORI_RULE(TRANSACTIONS_VIEW, APRIORI_PROCEDURE_CONFIGURATION, APRIORI_RESULT, APRIORI_PMML_MODEL) WITH OVERVIEW").executeUpdate();
+		
+		result.setRulesCount((int) em.createQuery("SELECT COUNT(*) FROM AprioriResult").getSingleResult());
+		
+		return result;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -72,27 +71,8 @@ public class TweetDAO {
 	@SuppressWarnings("unchecked")
 	@Transactional
 	public Collection<AprioriResult> getAllAprioriResults() {
-		Query query = em.createQuery("SELECT e FROM AprioriResult");
+		Query query = em.createQuery("SELECT e FROM AprioriResult e");
 		return (Collection<AprioriResult>) query.getResultList();
-	}
-	@Transactional
-	public void bootstrapSQL() {
-		try {
-			String sqlScript = this.readFile("BOOTSTRAP.sql");
-			Query query = em.createNativeQuery(sqlScript);
-		}catch (IOException e){
-			e.printStackTrace();
-		}
-	}
-	
-	private String readFile(String filePath) throws IOException {
-		ClassLoader classLoader = getClass().getClassLoader();
-		try {
-		    return IOUtils.toString(this.getClass().getResourceAsStream(SQL_SRC_PATH + filePath));
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
 	}
 
 }

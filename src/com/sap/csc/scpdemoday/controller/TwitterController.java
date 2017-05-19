@@ -6,12 +6,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sap.csc.scpdemoday.dao.TweetDAO;
-import com.sap.csc.scpdemoday.dto.AprioriProcessingResponseDTO;
+import com.sap.csc.scpdemoday.dto.AprioriResultDTO;
+import com.sap.csc.scpdemoday.dto.GatherTweetsResponseDTO;
 import com.sap.csc.scpdemoday.model.AprioriResult;
 import com.sap.csc.scpdemoday.model.Tweet;
 
@@ -21,15 +20,14 @@ import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
-import twitter4j.conf.ConfigurationBuilder;
 
 @Component
 public class TwitterController {
 	@Autowired
 	TweetDAO tweetDAO;
 	
-	public AprioriProcessingResponseDTO gatherTweets(String searchText) throws TwitterException {
-		AprioriProcessingResponseDTO response = new AprioriProcessingResponseDTO();
+	public GatherTweetsResponseDTO gatherTweets(String searchText) throws TwitterException {
+		GatherTweetsResponseDTO response = new GatherTweetsResponseDTO();
 		
 		QueryResult searchResult = this.searchOnTwitter(searchText);
 		List<Tweet> tweets = this.convertTweetsFromStatuses(searchResult.getTweets());
@@ -42,8 +40,8 @@ public class TwitterController {
 		return response;
 	}
 	
-	public void runApriori(){
-		tweetDAO.executeApriori();
+	public AprioriResultDTO runApriori(){
+		return tweetDAO.executeApriori();
 	}
 
 	private QueryResult searchOnTwitter(String searchText) throws TwitterException {

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sap.csc.scpdemoday.controller.TwitterController;
+import com.sap.csc.scpdemoday.dto.AprioriResultDTO;
 import com.sap.csc.scpdemoday.model.AprioriResult;
 
 import twitter4j.TwitterException;
@@ -34,9 +35,9 @@ public class AprioriService {
 	}
 	
 	@RequestMapping(value = "/run", method = RequestMethod.GET)
-	public Object run() {
-		twitterController.runApriori();
-		return null;
+	public AprioriResultDTO run() {
+		return twitterController.runApriori();
+		
 	}
 
 	@RequestMapping(value = "/getRulesBySupport", method = RequestMethod.GET)

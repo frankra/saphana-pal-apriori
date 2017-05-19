@@ -1,15 +1,15 @@
 package com.sap.csc.scpdemoday.dto;
 
-public class AprioriProcessingResponseDTO {
+public class GatherTweetsResponseDTO {
 
 	private int numberOfTweets;
 	private String query;
 
-	public AprioriProcessingResponseDTO() {
+	public GatherTweetsResponseDTO() {
 		super();
 	}
 
-	public AprioriProcessingResponseDTO(int numberOfTweets) {
+	public GatherTweetsResponseDTO(int numberOfTweets) {
 		super();
 		this.numberOfTweets = numberOfTweets;
 	}

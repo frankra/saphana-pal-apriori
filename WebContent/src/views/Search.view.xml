@@ -2,25 +2,43 @@
 	xmlns="sap.m" xmlns:l="sap.ui.layout" controllerName="sap.ui.scpdemoday.views.Search"
 	xmlns:html="http://www.w3.org/1999/xhtml">
 	<Page id="page" busyIndicatorDelay="0"
-		title="SCP Day Demo - HANA PAL APRIORI Rule" class="sapUiContentPadding"
+		title="SAP Cloud Platform - HANA PAL APRIORI Demo" class="sapUiContentPadding"
 		showNavButton="false" backgroundDesign="Solid">
 		<content>
-			<Image src="/src/assets/img/twitter.jpg" densityAware="false"
-				width="100%">
-				<layoutData>
-					<FlexItemData growFactor="1" />
-				</layoutData>
-			</Image>
+
+			<l:HorizontalLayout class="sapUiSmallMargin">
+				<Image src="/src/assets/img/twitter.jpg" width="300px" class="twitterImage"></Image>
+				<Text width="900px" text="{Text>/apriori}"></Text>
+			</l:HorizontalLayout>
+
 			<Panel>
 				<headerToolbar>
 					<Toolbar>
 						<SearchField search="runDemo" class="sapUiSmallMargin" />
-						<Button press="executeApriori"></Button>
-						<Button press="refreshModels"></Button>
+						<Button icon="sap-icon://activate" press="executeApriori"></Button>
+						<Button icon="sap-icon://synchronize" press="refreshModels"></Button>
 					</Toolbar>
 				</headerToolbar>
 				<content>
-
+					<TileContent footer="Tweets found" class="sapUiSmallMargin">
+						<content>
+							<NumericContent scale="M"
+								value="{SearchData>/numberOfTweets}" valueColor="success" />
+						</content>
+					</TileContent>
+					<TileContent class="sapUiSmallMargin">
+						<content>
+							<NewsContent contentText="{SearchData>/query}"
+								subheader="Search criteria">
+							</NewsContent>
+						</content>
+					</TileContent>
+					<TileContent footer="Rules identified" class="sapUiSmallMargin">
+						<content>
+							<NumericContent scale="M"
+								value="{AprioriResult>/rulesCount}" valueColor="success" />
+						</content>
+					</TileContent>
 					<Table inset="false" items="{TopRulesBySupport>/}">
 						<headerToolbar>
 							<Toolbar>
@@ -49,7 +67,8 @@
 								<cells>
 									<Text text="{TopRulesBySupport>prerule}" />
 									<Text text="{TopRulesBySupport>postrule}" />
-									<Text text="{TopRulesBySupport>support}" />
+									<Text
+										text="{path:'TopRulesBySupport>support', formatter:'._formatSupport'}" />
 									<Text text="{TopRulesBySupport>confidence}" />
 									<Text text="{TopRulesBySupport>lift}" />
 								</cells>
@@ -84,7 +103,8 @@
 								<cells>
 									<Text text="{TopRulesByConfidence>prerule}" />
 									<Text text="{TopRulesByConfidence>postrule}" />
-									<Text text="{TopRulesByConfidence>support}" />
+									<Text
+										text="{path:'TopRulesByConfidence>support', formatter:'._formatSupport'}" />
 									<Text text="{TopRulesByConfidence>confidence}" />
 									<Text text="{TopRulesByConfidence>lift}" />
 								</cells>
@@ -119,7 +139,8 @@
 								<cells>
 									<Text text="{TopRulesByLift>prerule}" />
 									<Text text="{TopRulesByLift>postrule}" />
-									<Text text="{TopRulesByLift>support}" />
+									<Text
+										text="{path:'TopRulesByLift>support', formatter:'._formatSupport'}" />
 									<Text text="{TopRulesByLift>confidence}" />
 									<Text text="{TopRulesByLift>lift}" />
 								</cells>

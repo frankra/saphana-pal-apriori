@@ -3,6 +3,8 @@
 	
 	var BASE_API_PATH = '/api/';
 	
+	var TEXT_JSON_PATH = "/src/assets/resources/text.json";
+	
 	var TWEETS_ENDPOINT = BASE_API_PATH + "Tweets/";
 	
 	var APRIORI_ENDPOINT = BASE_API_PATH + "Apriori/";
@@ -21,17 +23,27 @@
 			this.oPage = oView.byId("page");
 			
 			// Set Models
-			this._oSearchData = new sap.ui.model.json.JSONModel();
-			oView.setModel(this._oSearchData, 'SearchData');
+			this._oSearchDataModel = new sap.ui.model.json.JSONModel();
+			oView.setModel(this._oSearchDataModel, 'SearchData');
 			
-			this._oTopRulesBySupport = new sap.ui.model.json.JSONModel();
-			oView.setModel(this._oTopRulesBySupport, 'TopRulesBySupport');
+			this._oAprioriResultModel = new sap.ui.model.json.JSONModel();
+			oView.setModel(this._oAprioriResultModel, 'AprioriResult');
 			
-			this._oTopRulesByConfidence = new sap.ui.model.json.JSONModel();
-			oView.setModel(this._oTopRulesByConfidence, 'TopRulesByConfidence');
+			this._oTextModel = new sap.ui.model.json.JSONModel();
+			oView.setModel(this._oTextModel, 'Text');
+			jQuery.get(TEXT_JSON_PATH)
+			.then(function(oResponse){
+				this._oTextModel.setData(oResponse);
+			}.bind(this));
 			
-			this._oTopRulesByLift = new sap.ui.model.json.JSONModel();
-			oView.setModel(this._oTopRulesByLift, 'TopRulesByLift');
+			this._oTopRulesBySupportModel = new sap.ui.model.json.JSONModel();
+			oView.setModel(this._oTopRulesBySupportModel, 'TopRulesBySupport');
+			
+			this._oTopRulesByConfidenceModel = new sap.ui.model.json.JSONModel();
+			oView.setModel(this._oTopRulesByConfidenceModel, 'TopRulesByConfidence');
+			
+			this._oTopRulesByLiftModel = new sap.ui.model.json.JSONModel();
+			oView.setModel(this._oTopRulesByLiftModel, 'TopRulesByLift');
 			
 		},
 		
@@ -47,9 +59,9 @@
 				oLoadLiftRules,
 			])
 			.then(function(aResults){
-				this._oTopRulesBySupport.setData(aResults[0]);
-				this._oTopRulesByConfidence.setData(aResults[1]);
-				this._oTopRulesByLift.setData(aResults[2]);
+				this._oTopRulesBySupportModel.setData(aResults[0]);
+				this._oTopRulesByConfidenceModel.setData(aResults[1]);
+				this._oTopRulesByLiftModel.setData(aResults[2]);
 				
 				this.unlockUI();
 			}.bind(this))
@@ -60,18 +72,20 @@
 			this.lockUI();
 			jQuery.get(APRIORI_GATHER_TWEETS_ENDPOINT + encodeURIComponent(oEvent.getParameter('query')))
 			.then(function(oResult){
-				this._oSearchData.setData(oResult);
+				this._oSearchDataModel.setData(oResult);
 				return jQuery.get(APRIORI_RUN_PATH);
-			}.bind(this))
-			.then(function(){
-				return this.refreshModels();
 			}.bind(this));
+		},
+		
+		_formatSupport : function(dValue){
+			return Math.round(dValue * 100);
 		},
 		
 		executeApriori: function(){
 			this.lockUI();
 			jQuery.get(APRIORI_RUN_PATH)
 			.then(function(oResult){
+				this._oAprioriResultModel.setModel(oResult);
 				this.refreshModels();
 			}.bind(this));
 		},
