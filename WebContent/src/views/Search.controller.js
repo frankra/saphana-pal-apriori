@@ -73,7 +73,6 @@
 			jQuery.get(APRIORI_GATHER_TWEETS_ENDPOINT + encodeURIComponent(oEvent.getParameter('query')))
 			.then(function(oResult){
 				this._oSearchDataModel.setData(oResult);
-				return jQuery.get(APRIORI_RUN_PATH);
 			}.bind(this));
 		},
 		
