@@ -65,31 +65,34 @@
 				
 				this.unlockUI();
 			}.bind(this))
-			.catch(this._defaultPromiseError.bind(this));
+			.catch(this._defaultError.bind(this));
 		},
 		
-		runDemo : function(oEvent){
+		gatherTweets : function(oEvent){
 			this.lockUI();
-			jQuery.get(APRIORI_GATHER_TWEETS_ENDPOINT + encodeURIComponent(oEvent.getParameter('query')))
-			.then(function(oResult){
+			var oRequest = jQuery.get(APRIORI_GATHER_TWEETS_ENDPOINT + encodeURIComponent(oEvent.getParameter('query')))
+			oRequest.then(function(oResult){
 				this._oSearchDataModel.setData(oResult);
-			}.bind(this));
+				this.unlockUI();
+			}.bind(this))
+			oRequest.error(this._defaultError.bind(this));
 		},
 		
-		_formatSupport : function(dValue){
-			return Math.round(dValue * 100);
+		_formatPercent : function(dValue){
+			return dValue * 100;
 		},
 		
 		executeApriori: function(){
 			this.lockUI();
-			jQuery.get(APRIORI_RUN_PATH)
-			.then(function(oResult){
-				this._oAprioriResultModel.setModel(oResult);
+			var oRequest = jQuery.get(APRIORI_RUN_PATH);
+			oRequest.then(function(oResult){
+				this._oAprioriResultModel.setData(oResult);
 				this.refreshModels();
 			}.bind(this));
+			oRequest.error(this._defaultError.bind(this));
 		},
 		
-		_defaultPromiseError : function(e){
+		_defaultError : function(e){
 			alert("Something wrong happened");
 			console.log(e);
 			this.unlockUI();

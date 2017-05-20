@@ -32,7 +32,8 @@ public class TweetDAO {
 	}
 	@Transactional
 	public AprioriResultDTO executeApriori() {
-		AprioriResultDTO result = new AprioriResultDTO(); 
+		AprioriResultDTO result = new AprioriResultDTO();
+		em.createNativeQuery("DELETE FROM APRIORI_RESULT").executeUpdate();
 		em.createNativeQuery("CALL SYSTEM.PAL_APRIORI_RULE(TRANSACTIONS_VIEW, APRIORI_PROCEDURE_CONFIGURATION, APRIORI_RESULT, APRIORI_PMML_MODEL) WITH OVERVIEW").executeUpdate();
 		
 		result.setRulesCount((Long) em.createQuery("SELECT COUNT(e) FROM AprioriResult e").getSingleResult());

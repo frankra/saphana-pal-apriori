@@ -34,7 +34,7 @@ public class TwitterController {
 
 		tweetDAO.persistTweets(tweets);
 		
-		response.setNumberOfTweets(searchResult.getCount());
+		response.setNumberOfTweets(tweets.size());
 		response.setQuery(searchResult.getQuery());
 		
 		return response;

@@ -14,18 +14,12 @@
 			<Panel>
 				<headerToolbar>
 					<Toolbar>
-						<SearchField search="runDemo" class="sapUiSmallMargin" />
-						<Button icon="sap-icon://activate" press="executeApriori"></Button>
-						<Button icon="sap-icon://synchronize" press="refreshModels"></Button>
+						<SearchField search="gatherTweets" class="sapUiSmallMargin" />
+						<Button icon="sap-icon://process" text="Execute" press="executeApriori"></Button>
+						<Button icon="sap-icon://synchronize" text="Refresh" press="refreshModels"></Button>
 					</Toolbar>
 				</headerToolbar>
 				<content>
-					<TileContent footer="Tweets found" class="sapUiSmallMargin">
-						<content>
-							<NumericContent scale="M"
-								value="{SearchData>/numberOfTweets}" valueColor="success" />
-						</content>
-					</TileContent>
 					<TileContent class="sapUiSmallMargin">
 						<content>
 							<NewsContent contentText="{SearchData>/query}"
@@ -33,10 +27,16 @@
 							</NewsContent>
 						</content>
 					</TileContent>
+					<TileContent footer="Tweets found" class="sapUiSmallMargin">
+						<content>
+							<NumericContent value="{SearchData>/numberOfTweets}"
+								valueColor="success" />
+						</content>
+					</TileContent>
 					<TileContent footer="Rules identified" class="sapUiSmallMargin">
 						<content>
-							<NumericContent scale="M"
-								value="{AprioriResult>/rulesCount}" valueColor="success" />
+							<NumericContent value="{AprioriResult>/rulesCount}"
+								valueColor="success" />
 						</content>
 					</TileContent>
 					<Table inset="false" items="{TopRulesBySupport>/}">
@@ -68,8 +68,9 @@
 									<Text text="{TopRulesBySupport>prerule}" />
 									<Text text="{TopRulesBySupport>postrule}" />
 									<Text
-										text="{path:'TopRulesBySupport>support', formatter:'._formatSupport'}" />
-									<Text text="{TopRulesBySupport>confidence}" />
+										text="{path:'TopRulesBySupport>support', formatter:'._formatPercent'}" />
+									<Text
+										text="{path:'TopRulesBySupport>confidence', formatter:'._formatPercent'}" />
 									<Text text="{TopRulesBySupport>lift}" />
 								</cells>
 							</ColumnListItem>
@@ -104,8 +105,9 @@
 									<Text text="{TopRulesByConfidence>prerule}" />
 									<Text text="{TopRulesByConfidence>postrule}" />
 									<Text
-										text="{path:'TopRulesByConfidence>support', formatter:'._formatSupport'}" />
-									<Text text="{TopRulesByConfidence>confidence}" />
+										text="{path:'TopRulesByConfidence>support', formatter:'._formatPercent'}" />
+									<Text
+										text="{path:'TopRulesByConfidence>confidence', formatter:'._formatPercent'}" />
 									<Text text="{TopRulesByConfidence>lift}" />
 								</cells>
 							</ColumnListItem>
@@ -140,8 +142,9 @@
 									<Text text="{TopRulesByLift>prerule}" />
 									<Text text="{TopRulesByLift>postrule}" />
 									<Text
-										text="{path:'TopRulesByLift>support', formatter:'._formatSupport'}" />
-									<Text text="{TopRulesByLift>confidence}" />
+										text="{path:'TopRulesByLift>support', formatter:'._formatPercent'}" />
+									<Text
+										text="{path:'TopRulesByLift>confidence', formatter:'._formatPercent'}" />
 									<Text text="{TopRulesByLift>lift}" />
 								</cells>
 							</ColumnListItem>
